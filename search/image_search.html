@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+        <title>Search</title>
+        <link href="styles.css" rel="stylesheet">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <a class="advanced_search" href="/search/advanced_search.html">Advanced Search</a>
+                <a class="image_search" href="/search/index.html">Search</a>
+            </nav>
+        </header>
+        <main>
+            <div class="container1">
+                <img src="google_logo.png" style="height:94px; width:273px;">
+                <span class="images">Images</span>
+            </div>
+            <div class="container2">
+                <div class="search-container">
+                    <form action="https://google.com/search" id="search_form">
+                        <i class='bx bx-search-alt-2 search-icon'></i>
+                        <input type="hidden" name="tbm" value="isch">
+                        <input type="text" id="search_bar" name="q" placeholder="Search Google">
+                    </form>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,196 @@
+{% extends "network/layout.html" %}
+{% block title %}Profile{% endblock %}
+{% block body %}
+<style>
+     .btn-primary{
+        width:300px;
+        border-radius:50px;
+        transition: width 0.5s ease;
+        height: 40px;
+     }
+     .btn-primary:hover{
+        box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.1);
+        width:325px;
+        background-color:#007bff;
+        border:none;
+     }
+     .btn-secondary{
+        width:300px;
+        border-radius:50px;
+        height: 40px;
+     }
+     .icon-number{
+            display:flex;
+            align-items:center;
+        }
+</style>
+<div class="header" style="display:flex; flex-direction:row; justify-content:center; margin-bottom: 20px;">
+    <h3 style="margin-right: 20px; margin-top:0.5rem;">{{ user.username }}</h3>
+    <div style="display: flex; gap: 15px; margin-top:1rem;">
+        <div>
+            <strong>Followers:</strong> <span class="followers-count">{{ followers_count }}</span>
+        </div>
+        <div>
+            <strong>Following:</strong> <span class="followers-count">{{ following_count }}</span>
+        </div>
+    </div>
+</div>
+{% if user.is_authenticated and user.username == request.user.username %}
+<div></div>
+{% else %}
+    {% if request.user.username in followers %}
+    <div class="container" style="display:flex; flex-direction:row; justify-content:center; margin-bottom:3rem;">
+        <button type="button" data-name="{{user.username}}" id="follow" class="btn btn-secondary">Following</button>
+    </div>
+    {% else %}
+    <div class="container" style="display:flex; flex-direction:row; justify-content:center; margin-bottom:3rem;">
+        <button type="button" data-name="{{user.username}}" id="follow" class="btn btn-primary">Follow</button>
+    </div>
+    {% endif %}
+{% endif %}
+<div class="container">
+    <div class="row">
+        {% for post in posts %}
+            <div class="col-md-6 mb-3"> <!-- Each post takes up half the row on medium screens -->
+                <div class="card" style="box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.1); border-radius:20px;">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-body-secondary" style="margin-top:7px;">{{ post.content }}</h6>
+                        <p class="card-text" style="opacity:0.7;">{{ post.date}}</p>
+                        <div class="icon-number">
+                            <div class="icon" style="cursor:pointer; font-size:7px;" id="like" data-post-id="{{post.id}}">
+                                {% if request.user in post.likes.all %}
+                                    <i class='bx bxs-heart bx-sm' style="color:red;"></i>
+                                {% else %}
+                                    <i class='bx bx-heart bx-sm'></i>
+                                {% endif %}
+                            </div>
+                          <span style="font-size:19px; opacity:0.7;" id="likes">{{post.likes.count}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if forloop.counter|divisibleby:2 and not forloop.last %} <!-- If it's the second post in the loop and not the last -->
+                </div><div class="row">
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+{% if posts|length == 0 %}
+    <p>No posts available.</p>
+{% endif %}
+<div class="page" style="display:flex; flex-direction:row; justify-content:center; margin-top:3rem;">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link" aria-hidden="true">&laquo;</span>
+                </li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link" aria-hidden="true">&raquo;</span>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+{% csrf_token %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const followButton = document.querySelector('#follow');
+
+    if (followButton) {
+        followButton.addEventListener('click', () => {
+            const username = followButton.dataset.name;
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            const followersCountElem = document.querySelector('.followers-count');
+
+            // Determine the current action based on button text
+            const following = followButton.innerHTML.trim() === 'Following';
+
+            fetch(`/profile/${username}`, {
+                method: 'PUT',
+                body: JSON.stringify({ following: !following }),  // Toggle the following state
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                }
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    if (following) {
+                        followButton.innerHTML = 'Follow';
+                        followButton.className = 'btn btn-primary';  // Update to Follow button
+                        followersCountElem.innerText = parseInt(followersCountElem.innerText) + -1;
+                    } else {
+                        followButton.innerHTML = 'Following';
+                        followButton.className = 'btn btn-secondary';  // Update to Following button
+                        followersCountElem.innerText = parseInt(followersCountElem.innerText) + 1; // Increment
+                    }
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    }
+});
+
+const likeButtons = document.querySelectorAll('.icon');
+
+    likeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const postId = button.dataset.postId;
+            const csrf_token = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            fetch(`/post/${postId}/like`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrf_token
+                }
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    const icon = button.querySelector('i');
+                    const likesCount = button.nextElementSibling;
+
+                    if (icon.classList.contains('bx-heart')) {
+                        icon.classList.replace('bx-heart', 'bxs-heart');
+                        icon.style.color = 'red';
+                        likesCount.textContent = parseInt(likesCount.textContent) + 1;
+                    } else {
+                        icon.classList.replace('bxs-heart', 'bx-heart');
+                        icon.style.color = '';
+                        likesCount.textContent = parseInt(likesCount.textContent) - 1;
+                    }
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+</script>
+{% endblock %}

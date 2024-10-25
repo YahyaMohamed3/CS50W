@@ -1,0 +1,198 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+<head>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            padding: 5px;
+            margin-top: 2rem;
+        }
+        .icon-number {
+            display: flex;
+            align-items: center;
+        }
+        h5 a {
+            text-decoration: none;
+            color: black;
+        }
+        .icon {
+            cursor: pointer;
+            font-size: 24px;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+{% if error_message %}
+    <div class="alert alert-warning">{{ error_message }}</div>
+{% endif %}
+
+{% if following %}
+<h1 style="text-align:center;">Following Posts</h1>
+{% else %}
+<h1 style="text-align:center;">All Posts</h1>
+{% endif %}
+
+{% for post in posts %}
+<div class="container">
+    <div class="card" style="width: 27rem; box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.1); border-radius: 20px;">
+        <div class="card-body">
+            <h5 class="card-title"><a href="{% url 'profile' username=post.user %}">{{ post.user }}</a></h5>
+            {% if request.user == post.user %}
+            <a href="#" class="card-link edit" data-postid="{{post.id}}">Edit</a>
+            {% endif %}
+
+            <h6 class="card-subtitle mb-2 text-body-secondary content" style="margin-top: 7px;">{{ post.content }}</h6>
+            <p class="card-text" style="opacity: 0.7;">{{ post.date }}</p>
+
+            <div class="icon-number">
+                <div class="icon" data-post-id="{{ post.id }}">
+                    {% if request.user in post.likes.all %}
+                        <i class='bx bxs-heart bx-sm' style="color:red;"></i>
+                    {% else %}
+                        <i class='bx bx-heart bx-sm'></i>
+                    {% endif %}
+                </div>
+                <span style="font-size: 19px; opacity: 0.7;" id="likes">{{ post.likes.count }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<div class="page" style="display: flex; flex-direction: row; justify-content: center; margin-top: 3rem;">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <span class="page-link" aria-hidden="true">&laquo;</span>
+            </li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <span class="page-link" aria-hidden="true">&raquo;</span>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
+{% csrf_token %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.edit').forEach(editButton => {
+        editButton.addEventListener('click', function() {
+            const postId = this.dataset.postid;
+            const cardBody = this.closest('.card-body');
+            let contentElement = cardBody.querySelector('.content');
+            const originalContent = contentElement.textContent.trim();
+
+            // Replace the content with a textarea for editing
+            contentElement.innerHTML = `<textarea class="form-control" id="new_content" rows="5" style="margin-bottom:1rem;">${originalContent}</textarea>`;
+            this.textContent = 'Save';
+
+            // Reference to the textarea for the new content
+            const textarea = cardBody.querySelector('#new_content');
+            let newContent = originalContent;
+
+            // Listen for the user typing (keyup) to capture the new content
+            textarea.addEventListener('keyup', function() {
+                newContent = textarea.value.trim();
+            });
+
+            this.addEventListener('click', function savePost() {
+                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                // Ensure the new content is not empty
+                if (newContent !== '') {
+                    fetch(`/post/${postId}/edit`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrfToken
+                        },
+                        body: JSON.stringify({ content: newContent })
+                    })
+                    .then(response => response.json())
+                    .then(result => {
+                        if (result.success) {
+                            contentElement.innerHTML = `<h6 class="card-subtitle mb-2 text-body-secondary content" style="margin-top: 7px;">${newContent}</h6>`;
+                            this.textContent = 'Edit';
+
+                            this.removeEventListener('click', savePost);
+                        } else {
+                            console.error('Error updating content:', result.error);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                } else {
+                    console.error('Content cannot be empty');
+                }
+            }, { once: true });  // Ensure save functionality triggers only once
+        });
+    });
+
+
+
+    // Like button functionality
+    document.querySelectorAll('.icon').forEach(button => {
+        button.addEventListener('click', () => {
+            const postId = button.dataset.postId;
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            fetch(`/post/${postId}/like`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                }
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    const icon = button.querySelector('i');
+                    const likesCount = button.nextElementSibling;
+
+                    if (icon.classList.contains('bx-heart')) {
+                        icon.classList.replace('bx-heart', 'bxs-heart');
+                        icon.style.color = 'red';
+                        likesCount.textContent = parseInt(likesCount.textContent) + 1;
+                    } else {
+                        icon.classList.replace('bxs-heart', 'bx-heart');
+                        icon.style.color = '';
+                        likesCount.textContent = parseInt(likesCount.textContent) - 1;
+                    }
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends 'auctions/layout.html'%}
+{% block body %}
+<style>
+     #container {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        max-width: 1000px;
+        margin: 0 auto;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+    img {
+        height: 250px;
+        width: 100%;
+        max-width: 500px;
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 15px;
+    }
+    .listing {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 30px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+        transition: background-color 0.3s ease;
+    }
+    .price {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        margin: 5px 0;
+    }
+    button {
+        width: 50%;
+        padding: 10px 20px;
+        border-radius: 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        margin-top: 1.5rem;
+    }
+    .bid {
+        width: 20%;
+        padding: 10px 20px;
+        border-radius: 30px;
+        background-color: Grey;
+        color: white;
+        border: none;
+        cursor: pointer;
+        margin-top: 1.5rem;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    input, textarea {
+        border-radius: 30px;
+        border: none;
+        background-color: #F2F0EF;
+        height: 2.5rem;
+        padding: 5px 15px;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 15px;
+        font-size: 1rem;
+    }
+    input:focus, textarea:focus {
+        outline: none;
+        box-shadow: 0px 0px 5px #007bff;
+    }
+</style>
+<h2 style="text-align:center;">Active Listings</h2>
+<div id="container">
+    <div id="listing_container">
+    {% for listing in listings %}
+    <div class="listing">
+        <h4>{{ listing.title }}</h4>
+        <img src="{{ listing.picture }}">
+        <p>{{ listing.details }}</p>
+        <p class="price">Price: ${{ listing.starting_bid }}</p>
+        <a href="{% url 'listing' listing.id%}">View Listing</a>
+    </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}

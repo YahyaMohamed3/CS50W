@@ -1,0 +1,81 @@
+{% extends "encyclopedia/layout.html" %}
+{% load static %}
+
+{% block title %}
+Encyclopedia - New Entry
+<link href="{% static 'encyclopedia/styles.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        height: 90%;
+        align-items: center;
+        justify-content: center;
+    }
+    .text {
+        height: 300px;
+        width: 700px;
+        border-radius: 15px;
+        padding: 10px;
+        margin-bottom: 20px;
+        font-size: 16px;
+    }
+    .title {
+        border-radius: 15px;
+        padding: 10px;
+        margin-bottom: 10px;
+        width: 100%;
+        font-size: 18px;
+    }
+    .submit-button {
+        width:30%;
+        padding: 10px 20px;
+        border-radius: 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    .submit-button:hover {
+        background-color: #0056b3;
+    }
+    .ul,li{
+        color:red;
+    }
+</style>
+<div class="header">
+    <h1>Create a new encyclopedia entry</h1>
+</div>
+<div class="container">
+    <form method="POST" action="{% url 'wiki:new_entry' %}">
+        {% csrf_token %}
+        <div class="container1" style="display: flex; flex-direction: column; justify-content: center; width: 100%;">
+            <label for="id_title">Title:</label>
+            <input type="text" id="id_title" name="title" class="title" placeholder="Title for entry"required>
+            {% for error in form.title.errors %}
+                <ul class="errorlist">
+                    <li>{{ error }}</li>
+                </ul>
+            {% endfor %}
+        </div>
+
+        <div class="container1" style="display: flex; flex-direction: column; justify-content: center; width: 100%;">
+            <label for="id_text_area">Content:</label>
+            <textarea name="content" id="id_text_area" class="text" placeholder="Write your entry description here..." required>{{ form.text_area.value }}</textarea>
+            {% for error in form.text_area.errors %}
+                <ul class="errorlist">
+                    <li>{{ error }}</li>
+                </ul>
+            {% endfor %}
+        </div>
+
+        <div style="display:flex; flex-direction:row; justify-content:center;">
+            <button type="submit" class="submit-button">Save</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+    <title>Advanced Search</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <nav style="padding: 5px;
+        display: grid;
+        grid-auto-flow: column;
+        justify-content: space-around;
+        gap:65rem;
+        align-items: center;">
+            <div class="logo_container">
+                <img src="google_logo.png" style="height:27px;">
+            </div>
+            <div>
+            <a class="search" href="/search/index.html" style="margin-right:1.5rem;">Search</a>
+            <a class="image_search" href="/search/image_search.html">Image Search</a>
+            </div>
+        </nav>
+    </header>
+
+    <h3 style="color:#f28b82; margin-top:3rem; margin-left:50px; font-family: Arial, sans-serif; font-weight:1;">Advanced Search</h3>
+    <div class="line" style="background-color:black; height:0.5px; width:100%;"></div>
+    <div class="search-form-container">
+        <form action="https://www.google.com/search" id="advancedSearchForm" method="GET" name="searchForm">
+            <div class="input-container" style="color:white; font-size:17px;">
+                <!-- Label on the left -->
+                <div class="label-left" style="font-size:17px;">
+                    Find Pages with...
+                </div>
+
+                <!-- Input field in the center -->
+                <div class="input-center">
+                </div>
+
+                <!-- Helper text on the right -->
+                <div class="helper-right" style="color:white;">
+                    To do this in the search box...
+                </div>
+            </div>
+            <div class="input-container">
+                <!-- Label on the left -->
+                <div class="label-left">
+                    Find all these words:
+                </div>
+
+                <!-- Input field in the center -->
+                <div class="input-center">
+                    <input class="search_words"type="text" name="as_q">
+                </div>
+
+                <!-- Helper text on the right -->
+                <div class="helper-right">
+                    Type the important words: <span style="font-style: italic;">tricolor rat terrier</span>
+                </div>
+            </div>
+            <div class="input-container">
+                <!-- Label on the left -->
+                <div class="label-left">
+                    This exact word or phrase:
+                </div>
+
+                <!-- Input field in the center -->
+                <div class="input-center">
+                    <input class="search_words"type="text" name="as_epq">
+                </div>
+
+                <!-- Helper text on the right -->
+                <div class="helper-right">
+                    Put exact words in quotes: <span>"rat terrier"</span>
+                </div>
+            </div>
+            <div class="input-container">
+                <!-- Label on the left -->
+                <div class="label-left">
+                    any of these words:
+                </div>
+
+                <!-- Input field in the center -->
+                <div class="input-center">
+                    <input class="search_words"type="text" name="as_oq">
+                </div>
+
+                <!-- Helper text on the right -->
+                <div class="helper-right">
+                    Type <span>OR</span>
+                    between all the words you want: <span>miniature OR standard</span>
+                </div>
+            </div>
+            <div class="input-container">
+                <!-- Label on the left -->
+                <div class="label-left">
+                    None of these words:
+                </div>
+
+                <!-- Input field in the center -->
+                <div class="input-center">
+                    <input class="search_words"type="text" name="as_eq">
+                </div>
+
+                <!-- Helper text on the right -->
+                <div class="helper-right">
+                    Put a minus sign just before words you don't want: <span>-rodent, -"Jack Russell"</span>
+                </div>
+
+            </div>
+            <div class="input-container">
+                <!-- Label on the left -->
+                <div class="label-left">
+                    Numbers ranging from:
+                </div>
+
+                <!-- Input field in the center -->
+                <div class="input-center">
+                    <div class="table-container">
+                        <div class="table-cell">
+                            <input class="input-text" id="LK5akc" name="as_nlo" type="text">
+                        </div>
+                        <div class="table-cell table-cell-middle">
+                            to
+                        </div>
+                        <div class="table-cell">
+                            <input class="input-text" name="as_nhi" type="text">
+                        </div>
+                    </div>
+                </div>
+                <!-- Helper text on the right -->
+                <div class="helper-right">
+                    Put 2 periods between the numbers and add a unit of measure: <span>10..35 lb, $300..$500, 2010..2011</span>
+                </div>
+            </div>
+
+        <div class="line" style="background-color:black; height:1px; width:100%; margin-top:3rem; margin-bottom:1rem;"></div>
+        <div class="input-container" style="color:white; font-size:17px;">
+            <!-- Label on the left -->
+            <div class="label-left" style="font-size:17px;">
+                Then narrow your results by...
+            </div>
+
+            <!-- Input field in the center -->
+            <div class="input-center">
+            </div>
+
+            <!-- Helper text on the right -->
+            <div class="helper-right" style="color:white;">
+            </div>
+        </div>
+        <div class="input-container">
+            <!-- Label on the left -->
+            <div class="label-left">
+                language
+            </div>
+
+            <!-- Input field in the center -->
+            <div class="input-center">
+                  <select id="language_select" name="lr">
+                    <option value="">Any language</option>
+                    <option value="lang_en">English</option>
+                    <option value="lang_es">Spanish</option>
+                    <option value="lang_fr">French</option>
+                    <option value="lang_de">German</option>
+                    <option value="lang_zh-CN">Chinese (Simplified)</option>
+                    <option value="lang_ja">Japanese</option>
+                    <option value="lang_ko">Korean</option>
+                    <option value="lang_ru">Russian</option>
+                    <option value="lang_ar">Arabic</option>
+                    <option value="lang_pt">Portuguese</option>
+                    <option value="lang_it">Italian</option>
+                    <option value="lang_nl">Dutch</option>
+                    <option value="lang_sv">Swedish</option>
+                    <option value="lang_pl">Polish</option>
+                    <option value="lang_tr">Turkish</option>
+                    <option value="lang_vi">Vietnamese</option>
+                    <option value="lang_he">Hebrew</option>
+                    <option value="lang_fa">Persian</option>
+                    <option value="lang_th">Thai</option>
+                    <option value="lang_el">Greek</option>
+                    <option value="lang_hu">Hungarian</option>
+                    <option value="lang_no">Norwegian</option>
+                    <option value="lang_cs">Czech</option>
+                    <option value="lang_da">Danish</option>
+                    <option value="lang_ro">Romanian</option>
+                    <option value="lang_fi">Finnish</option>
+                    <option value="lang_ur">Urdu</option>
+                    <option value="lang_tl">Tagalog</option>
+                    <option value="lang_uk">Ukrainian</option>
+                    <option value="lang_id">Indonesian</option>
+                    <option value="lang_ms">Malay</option>
+                  </select>
+            </div>
+
+            <!-- Helper text on the right -->
+            <div class="helper-right">
+                Find pages in the language you select.
+            </div>
+        </div>
+        <div class="input-container">
+            <!-- Label on the left -->
+            <div class="label-left">
+                region:
+            </div>
+
+            <!-- Input field in the center -->
+            <div class="input-center">
+        <select id="region_select" name="cr">
+            <option value="any" selected>Any region</option>
+            <option value="countryAF">Afghanistan</option>
+            <option value="countryAL">Albania</option>
+            <option value="countryDZ">Algeria</option>
+            <option value="countryAS">American Samoa</option>
+            <option value="countryAD">Andorra</option>
+            <option value="countryAO">Angola</option>
+            <option value="countryAR">Argentina</option>
+            <option value="countryAM">Armenia</option>
+            <option value="countryAU">Australia</option>
+            <option value="countryAT">Austria</option>
+            <option value="countryAZ">Azerbaijan</option>
+            <option value="countryBH">Bahrain</option>
+            <option value="countryBD">Bangladesh</option>
+            <option value="countryBY">Belarus</option>
+            <option value="countryBE">Belgium</option>
+            <option value="countryBZ">Belize</option>
+            <option value="countryBJ">Benin</option>
+            <option value="countryBT">Bhutan</option>
+            <option value="countryBO">Bolivia</option>
+            <option value="countryBA">Bosnia and Herzegovina</option>
+            <option value="countryBW">Botswana</option>
+            <option value="countryBR">Brazil</option>
+            <option value="countryBN">Brunei</option>
+            <option value="countryBG">Bulgaria</option>
+            <option value="countryBF">Burkina Faso</option>
+            <option value="countryBI">Burundi</option>
+            <option value="countryKH">Cambodia</option>
+            <option value="countryCM">Cameroon</option>
+            <option value="countryCA">Canada</option>
+            <option value="countryCV">Cape Verde</option>
+            <option value="countryTD">Chad</option>
+            <option value="countryCL">Chile</option>
+            <option value="countryCN">China</option>
+            <option value="countryCO">Colombia</option>
+            <option value="countryKM">Comoros</option>
+            <option value="countryCD">Congo (DRC)</option>
+            <option value="countryCG">Congo (Republic)</option>
+            <option value="countryCR">Costa Rica</option>
+            <option value="countryHR">Croatia</option>
+            <option value="countryCU">Cuba</option>
+            <option value="countryCY">Cyprus</option>
+            <option value="countryCZ">Czech Republic</option>
+            <option value="countryDK">Denmark</option>
+            <option value="countryDJ">Djibouti</option>
+            <option value="countryDM">Dominica</option>
+            <option value="countryDO">Dominican Republic</option>
+            <option value="countryEC">Ecuador</option>
+            <option value="countryEG">Egypt</option>
+            <option value="countrySV">El Salvador</option>
+            <option value="countryGQ">Equatorial Guinea</option>
+            <option value="countryER">Eritrea</option>
+            <option value="countryEE">Estonia</option>
+            <option value="countryET">Ethiopia</option>
+            <option value="countryFJ">Fiji</option>
+            <option value="countryFI">Finland</option>
+            <option value="countryFR">France</option>
+            <option value="countryGA">Gabon</option>
+            <option value="countryGM">Gambia</option>
+            <option value="countryGE">Georgia</option>
+            <option value="countryDE">Germany</option>
+            <option value="countryGH">Ghana</option>
+            <option value="countryGR">Greece</option>
+            <option value="countryGT">Guatemala</option>
+            <option value="countryGN">Guinea</option>
+            <option value="countryGY">Guyana</option>
+            <option value="countryHT">Haiti</option>
+            <option value="countryHN">Honduras</option>
+            <option value="countryHK">Hong Kong</option>
+            <option value="countryHU">Hungary</option>
+            <option value="countryIS">Iceland</option>
+            <option value="countryIN">India</option>
+            <option value="countryID">Indonesia</option>
+            <option value="countryIR">Iran</option>
+            <option value="countryIQ">Iraq</option>
+            <option value="countryIE">Ireland</option>
+            <option value="countryIL">Israel</option>
+            <option value="countryIT">Italy</option>
+            <option value="countryJM">Jamaica</option>
+            <option value="countryJP">Japan</option>
+            <option value="countryJO">Jordan</option>
+            <option value="countryKZ">Kazakhstan</option>
+            <option value="countryKE">Kenya</option>
+            <option value="countryKR">Korea (South)</option>
+            <option value="countryKW">Kuwait</option>
+            <option value="countryKG">Kyrgyzstan</option>
+            <option value="countryLA">Laos</option>
+            <option value="countryLV">Latvia</option>
+            <option value="countryLB">Lebanon</option>
+            <option value="countryLS">Lesotho</option>
+            <option value="countryLR">Liberia</option>
+            <option value="countryLY">Libya</option>
+            <option value="countryLT">Lithuania</option>
+            <option value="countryLU">Luxembourg</option>
+            <option value="countryMO">Macau</option>
+            <option value="countryMK">Macedonia</option>
+            <option value="countryMG">Madagascar</option>
+            <option value="countryMW">Malawi</option>
+            <option value="countryMY">Malaysia</option>
+            <option value="countryMV">Maldives</option>
+            <option value="countryML">Mali</option>
+            <option value="countryMT">Malta</option>
+            <option value="countryMX">Mexico</option>
+            <option value="countryMD">Moldova</option>
+            <option value="countryMN">Mongolia</option>
+            <option value="countryME">Montenegro</option>
+            <option value="countryMA">Morocco</option>
+            <option value="countryMZ">Mozambique</option>
+            <option value="countryMM">Myanmar</option>
+            <option value="countryNA">Namibia</option>
+            <option value="countryNP">Nepal</option>
+            <option value="countryNL">Netherlands</option>
+            <option value="countryNZ">New Zealand</option>
+            <option value="countryNI">Nicaragua</option>
+            <option value="countryNE">Niger</option>
+            <option value="countryNG">Nigeria</option>
+            <option value="countryNO">Norway</option>
+            <option value="countryOM">Oman</option>
+            <option value="countryPK">Pakistan</option>
+            <option value="countryPA">Panama</option>
+            <option value="countryPG">Papua New Guinea</option>
+            <option value="countryPY">Paraguay</option>
+            <option value="countryPE">Peru</option>
+            <option value="countryPH">Philippines</option>
+            <option value="countryPL">Poland</option>
+            <option value="countryPT">Portugal</option>
+            <option value="countryQA">Qatar</option>
+            <option value="countryRO">Romania</option>
+            <option value="countryRU">Russia</option>
+            <option value="countryRW">Rwanda</option>
+            <option value="countrySA">Saudi Arabia</option>
+            <option value="countrySN">Senegal</option>
+            <option value="countryRS">Serbia</option>
+            <option value="countrySG">Singapore</option>
+            <option value="countrySK">Slovakia</option>
+            <option value="countrySI">Slovenia</option>
+            <option value="countryZA">South Africa</option>
+            <option value="countryES">Spain</option>
+            <option value="countryLK">Sri Lanka</option>
+            <option value="countrySD">Sudan</option>
+            <option value="countrySE">Sweden</option>
+            <option value="countryCH">Switzerland</option>
+            <option value="countrySY">Syria</option>
+            <option value="countryTW">Taiwan</option>
+            <option value="countryTZ">Tanzania</option>
+            <option value="countryTH">Thailand</option>
+            <option value="countryTG">Togo</option>
+            <option value="countryTT">Trinidad and Tobago</option>
+            <option value="countryTN">Tunisia</option>
+            <option value="countryTR">Turkey</option>
+            <option value="countryUG">Uganda</option>
+            <option value="countryUA">Ukraine</option>
+            <option value="countryAE">United Arab Emirates</option>
+            <option value="countryGB">United Kingdom</option>
+            <option value="countryUS">United States</option>
+            <option value="countryUY">Uruguay</option>
+            <option value="countryUZ">Uzbekistan</option>
+            <option value="countryVE">Venezuela</option>
+            <option value="countryVN">Vietnam</option>
+            <option value="countryZM">Zambia</option>
+            <option value="countryZW">Zimbabwe</option>
+        </select>
+            </div>
+
+            <!-- Helper text on the right -->
+            <div class="helper-right">
+                Find pages published in a particular region.
+            </div>
+        </div>
+        <div class="input-container">
+            <!-- Label on the left -->
+            <div class="label-left">
+                last update:
+            </div>
+
+            <!-- Input field in the center -->
+            <div class="input-center">
+                <select id="last_update_select" name="as_qdr">
+                    <option value="any" selected>Any time</option>
+                    <option value="d">Past 24 hours</option>
+                    <option value="w">Past week</option>
+                    <option value="m">Past month</option>
+                    <option value="y">Past year</option>
+                    <option value="h">Past hour</option>
+                  </select>
+            </div>
+
+            <!-- Helper text on the right -->
+            <div class="helper-right">
+                Find pages updated within the time you specify.
+            </div>
+        </div>
+        <div class="input-container">
+            <!-- Label on the left -->
+            <div class="label-left">
+                site or domain:
+            </div>
+
+            <!-- Input field in the center -->
+            <div class="input-center">
+                <input class="search_words"type="text" name="as_sitesearch" style="width:97.5%;">
+            </div>
+
+            <!-- Helper text on the right -->
+            <div class="helper-right">
+                Search one site (like <span>wikipedia.org</span>) or limit your results to a domain like<span> .edu</span>,<span> .org or .gov</span>
+            </div>
+
+        </div>
+        <div class="input-container">
+            <!-- Label on the left -->
+            <div class="label-left">
+                terms appearing:
+            </div>
+
+            <!-- Input field in the center -->
+            <div class="input-center">
+                <select id="terms_appearing_select" name="as_occt">
+                    <option value="any" selected>Anywhere in the page</option>
+                    <option value="title">In the title of the page</option>
+                    <option value="body">In the text of the page</option>
+                    <option value="url">In the URL of the page</option>
+                    <option value="links">In links to the page</option>
+                  </select>
+            </div>
+
+            <!-- Helper text on the right -->
+            <div class="helper-right">
+                Search for terms in the whole page, page title, or web address, or links to the page you're looking for.
+            </div>
+        </div>
+        <div class="input-container">
+            <!-- Label on the left -->
+            <div class="label-left">
+                file type:
+            </div>
+
+            <!-- Input field in the center -->
+            <div class="input-center">
+                <select id="file_type_select" name="as_filetype">
+                    <option value="55" selected>Any format</option>
+                    <option value="pdf">PDF</option>
+                    <option value="doc">Microsoft Word (DOC)</option>
+                    <option value="ppt">PowerPoint (PPT)</option>
+                    <option value="xls">Excel (XLS)</option>
+                    <option value="txt">Text file (TXT)</option>
+                    <!-- Add more file types as needed -->
+                  </select>
+            </div>
+
+            <!-- Helper text on the right -->
+            <div class="helper-right">
+                Find pages in the format you prefer.
+            </div>
+        </div>
+        <div class="input-container">
+            <!-- Label on the left -->
+            <div class="label-left">
+                usage rights:
+            </div>
+
+            <!-- Input field in the center -->
+            <div class="input-center">
+                <select id="usage_rights_select" name="as_rights">
+                    <option value="any" selected>Not filtered by license</option>
+                    <option value="cc_publicdomain">Labeled for reuse with modification</option>
+                    <option value="cc_sharealike">Labeled for reuse</option>
+                    <option value="cc_nonderived">Labeled for noncommercial reuse</option>
+                    <option value="cc_noncorn">Labeled for noncommercial reuse with modification</option>
+                  </select>
+            </div>
+
+            <!-- Helper text on the right -->
+            <div class="helper-right">
+                Find pages you are free to use yourself.
+            </div>
+        </div>
+
+        <div class="button_search">
+            <button class="search_button">
+                Advanced Search
+            </button>
+        </div>
+
+</form>
+</body>
+</html>

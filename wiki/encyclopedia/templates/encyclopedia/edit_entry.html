@@ -1,0 +1,58 @@
+{% extends "encyclopedia/layout.html" %}
+{% load static %}
+
+{% block title %}
+Encyclopedia - edit entry
+{% endblock %}
+
+{% block body %}
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        height: 90%;
+        align-items: center;
+        justify-content: center;
+    }
+    .text {
+        height: 500px;
+        width: 700px;
+        border-radius: 15px;
+        padding: 10px;
+        margin-bottom: 20px;
+        font-size: 16px;
+    }
+    .submit-button {
+        width:30%;
+        padding: 10px 20px;
+        border-radius: 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    .submit-button:hover {
+        background-color: #0056b3;
+    }
+    .ul,li{
+        color:red;
+    }
+</style>
+<div class="header">
+    <h1>Edit entry</h1>
+</div>
+<div class="container">
+    <form method="POST" action="{% url 'wiki:edit_entry' title %}">
+        {% csrf_token %}
+        <div class="container1" style="display: flex; flex-direction: column; justify-content: center; width: 100%;">
+            <label for="id_text_area">Edit Content:</label>
+            <textarea name="content" id="id_text_area" class="text" placeholder="Write your entry description here..." required>{{content | safe}}</textarea>
+        </div>
+
+        <div style="display:flex; flex-direction:row; justify-content:center;">
+            <button type="submit" class="submit-button">Save</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+textarea {
+    min-height: 400px;
+}
+.email{
+    display:flex;
+    flex-direction:row;
+    padding:5px;
+    border:3px;
+    border-color:grey;
+}
+.read {
+    background-color: #D3D3D3;
+    cursor:pointer;
+  }
+
+.unread {
+    background-color: white;
+    cursor:pointer;
+  }
+

@@ -1,0 +1,23 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia - {{title}}
+{% endblock %}
+
+{% block body %}
+<style>
+    .button{
+        border-radius:30px;
+        padding:10px 20px;
+        border:0;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+</style>
+   {{content | safe}}
+   <div style="display:flex; flex-direction:row; justify-content:flex-end; padding:10px;"></div>
+   <a class="button" style="text-decoration:none; color:white;" href="{% url 'wiki:edit_entry' title %}">Edit Page</a>
+   </div>
+{% endblock %}
