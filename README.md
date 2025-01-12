@@ -48,7 +48,6 @@ This repository contains projects completed as part of Harvard's [CS50W](https:/
 - **Technologies**: Django, Python, HTML, CSS.
 
 ---
-Thank you for checking out my CS50W Repo :).
 
 ## About CS50W
 The projects in this repository demonstrate skills in:
